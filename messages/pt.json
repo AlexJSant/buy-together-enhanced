@@ -2,7 +2,7 @@
   "editor.buy-together.title": "Compre Junto",
   "editor.buy-together.description": "Componente de compre junto",
   "editor.buy-together.discountPercentage.title": "Percentual de Desconto",
-  "editor.buy-together.discountPercentage.description": "Percentual de desconto a ser aplicado no preço final (0-100)",
+  "editor.buy-together.discountPercentage.description": "Percentual de desconto a ser aplicado no preço final (0-100). Nunca deixar vazio! Preencher com 0 (zero) para não aplicar desconto.",
   "editor.buy-together.customText.title": "Texto Personalizado",
   "editor.buy-together.customText.description": "Texto que será exibido ao lado do preço (ex: PIX, à vista, etc.)",
   "editor.buy-together.showCustomText.title": "Exibir Texto Personalizado",

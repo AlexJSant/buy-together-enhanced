@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { useCssHandles } from 'vtex.css-handles'
+import { useBuyTogether } from './Context'
 
 const CSS_HANDLES = [
   'buyTogetherContainer',
@@ -22,15 +23,38 @@ const CSS_HANDLES = [
 ]
 
 interface BuyTogetherMessageProps {
-  message: string
+  message?: ReactNode
+  children?: ReactNode
 }
 
-const BuyTogetherMessage: React.FC<BuyTogetherMessageProps> = ({
-  message = 'Leve os dois produtos',
+const BuyTogetherMessage: StorefrontFunctionComponent<BuyTogetherMessageProps> = ({
+  message,
+  children,
 }) => {
   const { handles } = useCssHandles(CSS_HANDLES)
+  const { message: contextMessage } = useBuyTogether()
+  const content =
+    children ?? message ?? contextMessage ?? 'Compre o conjunto por:'
 
-  return <div className={handles.buyTogetherInfo}>{message}</div>
+  return (
+    <h2 className={handles.buyTogetherInfo}>
+      {content}
+    </h2>
+  )
+}
+
+BuyTogetherMessage.schema = {
+  title: 'Mensagem Compre Junto',
+  description: 'Texto exibido acima do valor total no Compre Junto.',
+  type: 'object',
+  properties: {
+    message: {
+      title: 'Mensagem',
+      description: 'Texto da mensagem do Compre Junto.',
+      type: 'string',
+      default: 'Compre o conjunto por:',
+    },
+  },
 }
 
 export default BuyTogetherMessage

@@ -3,7 +3,7 @@
     "children": ["flex-layout.col#buyTogetherContent"]
   },
   "flex-layout.col#buyTogetherContent": {
-    "children": ["buy-together-title", "flex-layout.row#buyTogetherContainer"]
+    "children": ["flex-layout.row#buyTogetherContainer"]
   },
   "flex-layout.row#buyTogetherContainer": {
     "children": [

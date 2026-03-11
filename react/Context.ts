@@ -10,6 +10,7 @@ export interface BuyTogetherContextProps {
   setTotalPrice: Function
   customText: string
   showCustomText: boolean
+  message?: string
 }
 
 export const BuyTogetherContextDefault = {
@@ -22,6 +23,7 @@ export const BuyTogetherContextDefault = {
   setTotalPrice: () => {},
   customText: 'PIX',
   showCustomText: false,
+  message: undefined,
 }
 
 export const BuyTogetherContext = React.createContext<BuyTogetherContextProps>(

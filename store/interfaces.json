@@ -21,9 +21,6 @@
   "buy-together-buy-button": {
     "component": "BuyButton"
   },
-  "buy-together-title": {
-    "component": "Title"
-  },
   "buy-together-message": {
     "component": "Message"
   },

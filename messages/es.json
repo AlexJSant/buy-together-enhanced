@@ -1,6 +1,12 @@
 {
   "editor.buy-together.title": "Comprar juntos",
-  "editor.buy-together.description": "Comprar juntos componente",
+  "editor.buy-together.description": "Componente de comprar juntos",
+  "editor.buy-together.discountPercentage.title": "Porcentaje de descuento",
+  "editor.buy-together.discountPercentage.description": "Porcentaje de descuento a aplicar al precio final (0-100). ¡Nunca dejar vacío! Rellenar con 0 (cero) para no aplicar descuento.",
+  "editor.buy-together.customText.title": "Texto personalizado",
+  "editor.buy-together.customText.description": "Texto que se mostrará junto al precio (ej: PIX, al contado, etc.)",
+  "editor.buy-together.showCustomText.title": "Mostrar texto personalizado",
+  "editor.buy-together.showCustomText.description": "Si se debe mostrar el texto personalizado junto al precio",
   "admin/editor.buy-together.installments.description": "Valores disponibles para interpolación: '{installmentsNumber}, {installmentValue}, {installmentsTotalValue}, {interestRate}, {hasInterest}, {paymentSystemName}'",
   "admin/editor.buy-together.installments.title": "Cuotas",
   "admin/editor.buy-together.installments-list-item.title": "Cuotas",

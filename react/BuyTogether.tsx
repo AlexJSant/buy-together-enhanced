@@ -9,6 +9,7 @@ import { ProductGroupContext } from 'vtex.product-group-context'
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 import axios from 'axios'
 
+import './intlMessages'
 import { BuyTogetherContext } from './Context'
 import getProducts from './graphql/getProduct.gql'
 import { mapSKUItemsToCartItems } from './utils'
@@ -44,6 +45,12 @@ interface BuyTogetherProps {
   discountPercentage?: number
   customText?: string
   showCustomText?: boolean
+  /** Quando true, ignora o cross-sell e usa o SKU informado em manualSkuId */
+  useManualSku?: boolean
+  /** SKU único a ser usado como produto sugerido quando useManualSku estiver habilitado */
+  manualSkuId?: string
+  /** Mensagem exibida acima do valor total no Compre Junto */
+  message?: string
 }
 
 const notNull = (item: CartItem | null): item is CartItem => item !== null
@@ -55,8 +62,11 @@ const BuyTogether: StorefrontFunctionComponent = ({
   showAllSkus = false,
   preferredSKU = 'FIRST_AVAILABLE',
   discountPercentage = 0,
-  customText = 'PIX',
-  showCustomText = true,
+  customText = 'Texto Personalizado',
+  showCustomText = false,
+  useManualSku = false,
+  manualSkuId,
+  message = 'Compre o conjunto por:',
 }: BuyTogetherProps) => {
   const productContext = useProduct() as any
   const { product } = productContext
@@ -69,8 +79,22 @@ const BuyTogether: StorefrontFunctionComponent = ({
   const [orderedItems, setOrderedItems] = useState<Item[]>()
 
   useEffect(() => {
+    if (useManualSku) {
+      if (manualSkuId) {
+        const parsed = Number(manualSkuId)
+        if (!Number.isNaN(parsed)) {
+          setShowTogetherIds([parsed])
+        } else {
+          setShowTogetherIds([])
+        }
+      } else {
+        setShowTogetherIds([])
+      }
+      return
+    }
+
     getShowTogetherIds()
-  }, [product])
+  }, [product, useManualSku, manualSkuId])
 
   const getShowTogetherIds = async () => {
     const rawResult = await axios(
@@ -187,6 +211,7 @@ const BuyTogether: StorefrontFunctionComponent = ({
         setTotalPrice,
         customText,
         showCustomText,
+        message,
       }}
     >
       <ProductListProvider listName="buyTogether">
@@ -212,25 +237,44 @@ BuyTogetherWrapper.schema = {
   description: 'Componente custom de Compre Junto',
   type: 'object',
   properties: {
-    discountPercentage: {
-      title: 'Percentual de Desconto',
-      description: 'Percentual de desconto a ser aplicado no preço final (0-100)',
-      type: 'number',
-      default: 7,
-      minimum: 0,
-      maximum: 20,
-    },
-    customText: {
-      title: 'Texto Personalizado',
-      description: 'Texto que será exibido ao lado do preço (ex: PIX, à vista, etc.)',
+    message: {
+      title: 'Mensagem',
+      description: 'Mensagem exibida acima do valor total no Compre Junto.',
       type: 'string',
-      default: 'PIX',
+      default: 'Compre o conjunto por:',
+    },
+    useManualSku: {
+      title: 'Usar SKU manual?',
+      description:
+        'Quando habilitado, ignora o cross-sell Show Together e utiliza o SKU informado em "SKU manual" como produto sugerido.',
+      type: 'boolean',
+      default: false,
+    },
+    manualSkuId: {
+      title: 'SKU manual',
+      description:
+        'ID do SKU a ser utilizado como produto sugerido quando "Usar SKU manual?" estiver habilitado.',
+      type: 'string',
     },
     showCustomText: {
       title: 'Exibir Texto Personalizado?',
       description: 'Se deve exibir o campo Texto Personalizado ao lado do preço',
       type: 'boolean',
-      default: true,
+      default: false,
+    },
+    customText: {
+      title: 'Texto Personalizado',
+      description: 'Texto que será exibido ao lado do preço (ex: PIX, à vista, etc.)',
+      type: 'string',
+      default: 'Texto Personalizado',
+    },
+    discountPercentage: {
+      title: 'Percentual de Desconto',
+      description: 'Percentual de desconto a ser aplicado no preço final (0-100). Nunca deixar vazio! Preencher com 0 (zero) para não aplicar desconto.',
+      type: 'number',
+      default: 0, // Antes era o desconto padrao do Pix que era 10%
+      minimum: 0,
+      maximum: 20,
     },
   },
 }
