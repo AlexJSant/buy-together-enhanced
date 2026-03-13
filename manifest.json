@@ -1,14 +1,15 @@
 {
   "vendor": "sunhouse",
-  "name": "vtex-buy-together-app",
+  "name": "buy-together-enhanced",
   "version": "0.5.0",
-  "title": "Buy Together App",
-  "description": "Buy Together App Component - for using with Show Together functionality in VTEX Admin Catalog",
+  "title": "Buy Together Enhanced",
+  "description": "Displays a Buy Together bundle card with automatic Show Together cross-sell or manual SKU, discount calculation, and custom text support.",
   "defaultLocale": "pt-BR",
   "builders": {
-    "messages": "1.x",
+    "react": "3.x",
     "store": "0.x",
-    "react": "3.x"
+    "messages": "1.x",
+    "docs": "0.x"
   },
   "dependencies": {
     "vtex.styleguide": "9.x",

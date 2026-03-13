@@ -33,19 +33,50 @@ const CSS_HANDLES = [
 const ProductLists: React.FC = () => {
   const { handles } = useCssHandles(CSS_HANDLES)
   const context = useBuyTogether() as BuyTogetherContextProps
-  const { normalizedProductList } = context
+  const { normalizedProductList, showListMode, useManualSku } = context
+
+  const MAX_LIST_ITEMS = 8
+
+  const itemsToRender = React.useMemo(() => {
+    if (!normalizedProductList || normalizedProductList.length === 0) {
+      return []
+    }
+
+    // Quando há SKU manual ativo, o modo lista é ignorado e usamos sempre um único item
+    if (useManualSku || !showListMode) {
+      return [normalizedProductList[0]]
+    }
+
+    // Modo lista ativo com cross-sell:
+    // 1. Fazemos uma cópia para não mutar o array original
+    // 2. Randomizamos a ordem
+    // 3. Limitamos a quantidade exibida para evitar listas muito grandes
+    const copied = [...normalizedProductList]
+
+    for (let i = copied.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      const temp = copied[i]
+      copied[i] = copied[j]
+      copied[j] = temp
+    }
+
+    return copied.slice(0, MAX_LIST_ITEMS)
+  }, [normalizedProductList, showListMode, useManualSku])
 
   return (
     <div className={`h-100 w-100 ph4 ${handles.productList}`}>
       <div className={`${handles.buyTogetherProductList} pv4`}>
-        {normalizedProductList && normalizedProductList.length > 0 && (
-          <div
-            data-item-id="jujuba"
-            className={`${handles.buyTogetherProductItem} pv2`}
-          >
-            <ExtensionPoint id="product-summary" product={normalizedProductList[0]} />
-          </div>
-        )}
+        {itemsToRender &&
+          itemsToRender.length > 0 &&
+          itemsToRender.map((product: any, index: number) => (
+            <div
+              key={product?.sku?.itemId ?? index}
+              data-item-id={product?.sku?.itemId ?? `item-${index}`}
+              className={`${handles.buyTogetherProductItem} pv2`}
+            >
+              <ExtensionPoint id="product-summary" product={product} />
+            </div>
+          ))}
       </div>
     </div>
   )

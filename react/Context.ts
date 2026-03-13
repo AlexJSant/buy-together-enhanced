@@ -10,6 +10,10 @@ export interface BuyTogetherContextProps {
   setTotalPrice: Function
   customText: string
   showCustomText: boolean
+  /** Quando true, ignora o cross-sell e usa o SKU informado em manualSkuId */
+  useManualSku: boolean
+  /** Quando true (e sem SKU manual ativo), exibe múltiplos itens de cross-sell em vez de apenas um */
+  showListMode: boolean
   message?: string
 }
 
@@ -23,6 +27,8 @@ export const BuyTogetherContextDefault = {
   setTotalPrice: () => {},
   customText: 'PIX',
   showCustomText: false,
+  useManualSku: false,
+  showListMode: false,
   message: undefined,
 }
 

@@ -51,6 +51,12 @@ interface BuyTogetherProps {
   manualSkuId?: string
   /** Mensagem exibida acima do valor total no Compre Junto */
   message?: string
+  /**
+   * Quando true (e sem SKU manual ativo), exibe múltiplos itens de cross-sell
+   * em vez de apenas um no bloco buy-together-product-list.
+   * Padrão: false (mantém comportamento atual de 1 item).
+   */
+  showListMode?: boolean
 }
 
 const notNull = (item: CartItem | null): item is CartItem => item !== null
@@ -67,6 +73,7 @@ const BuyTogether: StorefrontFunctionComponent = ({
   useManualSku = false,
   manualSkuId,
   message = 'Compre o conjunto por:',
+  showListMode = false,
 }: BuyTogetherProps) => {
   const productContext = useProduct() as any
   const { product } = productContext
@@ -211,6 +218,9 @@ const BuyTogether: StorefrontFunctionComponent = ({
         setTotalPrice,
         customText,
         showCustomText,
+        useManualSku,
+        // Quando há SKU manual ativo, o modo lista é ignorado pela UI do ProductsList
+        showListMode,
         message,
       }}
     >
@@ -255,6 +265,13 @@ BuyTogetherWrapper.schema = {
       description:
         'ID do SKU a ser utilizado como produto sugerido quando "Usar SKU manual?" estiver habilitado.',
       type: 'string',
+    },
+    showListMode: {
+      title: 'Exibir lista de produtos sugeridos?',
+      description:
+        'Quando habilitado e sem SKU manual ativo, exibe vários produtos sugeridos do cross-sell Show Together em vez de apenas um. Padrão: desativado.',
+      type: 'boolean',
+      default: false,
     },
     showCustomText: {
       title: 'Exibir Texto Personalizado?',

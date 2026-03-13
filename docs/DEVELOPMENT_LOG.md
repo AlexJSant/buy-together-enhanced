@@ -5,12 +5,12 @@
 - **Internationalization messages aligned**
   - Alinhadas as mensagens de `buy-together` entre todos os arquivos em `messages/` (`pt.json`, `en.json`, `es.json` e `context.json`).
   - Adicionadas/atualizadas as chaves:
-    - `editor.buy-together.discountPercentage.title`
-    - `editor.buy-together.discountPercentage.description` (incluindo instrução clara para nunca deixar vazio e usar `0` quando não houver desconto)
-    - `editor.buy-together.customText.title`
-    - `editor.buy-together.customText.description`
-    - `editor.buy-together.showCustomText.title`
-    - `editor.buy-together.showCustomText.description`
+    - `admin/editor.buy-together.discountPercentage.title`
+    - `admin/editor.buy-together.discountPercentage.description` (incluindo instrução clara para nunca deixar vazio e usar `0` quando não houver desconto)
+    - `admin/editor.buy-together.customText.title`
+    - `admin/editor.buy-together.customText.description`
+    - `admin/editor.buy-together.showCustomText.title`
+    - `admin/editor.buy-together.showCustomText.description`
   - Garantido que todos os arquivos compartilham o mesmo conjunto de chaves, com traduções coerentes em PT/EN/ES e fallback em `context.json`.
 
 - **Schema do componente BuyTogether**
@@ -23,14 +23,14 @@
   - Criado arquivo de mensagens de i18n isolado para o app:
     - Arquivo: `react/intlMessages.ts`
     - Conteúdo: declaração estática via `defineMessages` das seguintes IDs:
-      - `editor.buy-together.title`
-      - `editor.buy-together.description`
-      - `editor.buy-together.discountPercentage.title`
-      - `editor.buy-together.discountPercentage.description`
-      - `editor.buy-together.customText.title`
-      - `editor.buy-together.customText.description`
-      - `editor.buy-together.showCustomText.title`
-      - `editor.buy-together.showCustomText.description`
+      - `admin/editor.buy-together.title`
+      - `admin/editor.buy-together.description`
+      - `admin/editor.buy-together.discountPercentage.title`
+      - `admin/editor.buy-together.discountPercentage.description`
+      - `admin/editor.buy-together.customText.title`
+      - `admin/editor.buy-together.customText.description`
+      - `admin/editor.buy-together.showCustomText.title`
+      - `admin/editor.buy-together.showCustomText.description`
       - `admin/editor.buy-together.installments-list-item.title`
   - Import realizado em `react/BuyTogether.tsx`:
     - Adicionada linha: `import './intlMessages'`
@@ -55,7 +55,7 @@
     - Usa `default: 7` apenas no schema (`BuyTogetherWrapper.schema.properties.discountPercentage`) e não em nenhum outro ponto do projeto.
   - Decisão de produto/estrutura: o valor padrão desejado no schema passa a ser `0`, alinhado com o comportamento das props e com a descrição que indica que `0` significa “não aplicar desconto”.
 
-### TODOs pendentes deste chat
+### TODOs deste chat (todos concluídos)
 
 - **Atualizar schema do `discountPercentage`**: mudar `default: 7` para `default: 0` em `react/BuyTogether.tsx` (`BuyTogetherWrapper.schema.properties.discountPercentage`), garantindo consistência entre:
   - default das props do componente (`discountPercentage = 0`), e
@@ -156,7 +156,7 @@
   - Motivação:
     - Dar mais destaque à mensagem (heading) e ao modo de seleção de SKU (manual vs cross-sell) antes de opções mais avançadas de preço.
 
-### TODOs pendentes deste chat
+### TODOs deste chat (todos concluídos)
 
 - **Documentar no README** (ou em outro arquivo de docs de uso) os novos comportamentos do componente `BuyTogether`:
   - Explicar o alternador `useManualSku` e o uso de `manualSkuId`.
@@ -170,4 +170,67 @@
   - Revisar o mapeamento de mensagens para os campos `discountPercentage`, `customText` e `showCustomText` do schema `BuyTogetherWrapper` (`react/BuyTogether.tsx`), conferindo se:
     - Os IDs usados no schema batem exatamente com os IDs definidos em `react/intlMessages.ts`.
     - As mesmas chaves existem e estão traduzidas em `messages/pt.json`, `messages/en.json`, `messages/es.json` e `messages/context.json`.
-  - Testar no Site Editor se os rótulos passam a exibir as traduções em vez dos IDs (`editor.buy-together.*`) e, se necessário, forçar limpeza de cache/builder na conta para validar.
+  - Testar no Site Editor se os rótulos passam a exibir as traduções em vez dos IDs e, se necessário, forçar limpeza de cache/builder na conta para validar.
+
+### 2026-03-12 (chat atual)
+
+- **Correção de erro de domínio de mensagens no build da VTEX**
+  - Erro observado durante o `vtex link`:
+    - `No domains were found for messages: editor.buy-together.title`, `editor.buy-together.description`, `editor.buy-together.discountPercentage.title`, `editor.buy-together.discountPercentage.description`, `editor.buy-together.customText.title`, `editor.buy-together.customText.description`, `editor.buy-together.showCustomText.title`, `editor.buy-together.showCustomText.description`.
+    - Mensagem complementar do builder: `Please add a domain before the message id like "store/<message.id>" or "admin/<message.id>".`
+  - Causa raiz:
+    - As mensagens usadas para rotular campos no Site Editor estavam definidas sem domínio (`editor.buy-together.*`), o que passou a ser rejeitado pelo builder `react@3.x`.
+
+- **Ajuste de domínio das mensagens de editor para `admin/`**
+  - Arquivos atualizados: `messages/pt.json`, `messages/en.json`, `messages/es.json`, `messages/context.json`.
+  - Alterações principais:
+    - `editor.buy-together.title` → `admin/editor.buy-together.title`
+    - `editor.buy-together.description` → `admin/editor.buy-together.description`
+    - `editor.buy-together.discountPercentage.title` → `admin/editor.buy-together.discountPercentage.title`
+    - `editor.buy-together.discountPercentage.description` → `admin/editor.buy-together.discountPercentage.description`
+    - `editor.buy-together.customText.title` → `admin/editor.buy-together.customText.title`
+    - `editor.buy-together.customText.description` → `admin/editor.buy-together.customText.description`
+    - `editor.buy-together.showCustomText.title` → `admin/editor.buy-together.showCustomText.title`
+    - `editor.buy-together.showCustomText.description` → `admin/editor.buy-together.showCustomText.description`
+  - Mantidas como estavam (já corretas):
+    - Mensagens `admin/editor.buy-together.installments.*`.
+    - Mensagem `store/buy-together.installments.default`.
+
+- **Alinhamento do código React com os novos IDs**
+  - Arquivo `react/intlMessages.ts` atualizado para refletir o novo domínio:
+    - IDs agora usam o prefixo `admin/editor.buy-together.*`, garantindo consistência com os arquivos de mensagens e com o requirement do builder.
+
+- **Atualização da documentação interna**
+  - `docs/README.md`:
+    - Atualizados os exemplos de mensagens para referenciar `admin/editor.buy-together.*` em vez de `editor.buy-together.*`.
+  - `docs/DEVELOPMENT_LOG.md`:
+    - Registradas as mudanças de domínio e o erro original de build, para futura referência em debugging e manutenção.
+
+### 2026-03-12 (chat atual) — Modo lista de produtos sugeridos
+
+- **Alternador de lista de produtos sugeridos**
+  - Adicionada a prop `showListMode?: boolean` ao componente `BuyTogether` em `react/BuyTogether.tsx`.
+  - Novo campo no schema `BuyTogetherWrapper.schema.properties.showListMode`:
+    - Título: "Exibir lista de produtos sugeridos?"
+    - Tipo: `boolean`.
+    - Default: `false`, mantendo o comportamento anterior (apenas 1 item sugerido).
+  - A prop é propagada via contexto (`react/Context.ts` e `BuyTogetherContext`) para o componente `react/ProductsList.tsx`.
+
+- **Prioridade do SKU manual sobre o cross-sell**
+  - O contexto `BuyTogetherContextProps` agora expõe `useManualSku: boolean` e `showListMode: boolean`.
+  - Em `react/ProductsList.tsx`, quando `useManualSku === true`, o modo lista é ignorado:
+    - Mesmo que `showListMode` esteja habilitado, o componente renderiza apenas um produto (SKU manual), respeitando a prioridade do fluxo manual sobre o cross-sell.
+
+- **Lista de cross-sell com limite e randomização**
+  - Em `react/ProductsList.tsx`:
+    - Definida constante `MAX_LIST_ITEMS = 8` para limitar a quantidade máxima de produtos exibidos na lista de cross-sell, evitando impactos de performance.
+    - Implementada função de randomização (Fisher–Yates) sobre uma cópia de `normalizedProductList`, seguida de `slice(0, MAX_LIST_ITEMS)`.
+  - A lista somente é randomizada e limitada quando:
+    - `showListMode === true` **e**
+    - `useManualSku === false` (modo cross-sell ativo).
+  - Quando não há cross-sell configurado para o produto, o modo lista aproveita os itens vindos do contexto de grupo de produto, respeitando o mesmo limite de 8 itens.
+
+- **Estabilidade visual da lista (evitar reembaralhamento constante)**
+  - A lista de itens a serem renderizados (`itemsToRender`) passou a ser calculada com `React.useMemo`:
+    - Dependências: `normalizedProductList`, `showListMode`, `useManualSku`.
+    - Resultado: a randomização ocorre apenas quando os dados ou flags mudam, evitando que os produtos "troquem" incessantemente a cada re-render.
