@@ -234,3 +234,7 @@
   - A lista de itens a serem renderizados (`itemsToRender`) passou a ser calculada com `React.useMemo`:
     - Dependências: `normalizedProductList`, `showListMode`, `useManualSku`.
     - Resultado: a randomização ocorre apenas quando os dados ou flags mudam, evitando que os produtos "troquem" incessantemente a cada re-render.
+
+### TODOs pendentes
+
+- [ ] **Documentação visual do componente**: adicionar prints e/ou GIFs exemplificando o componente Buy Together em uso (storefront e/ou Site Editor), para facilitar onboarding e referência na documentação.
