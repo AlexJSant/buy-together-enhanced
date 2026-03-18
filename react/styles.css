@@ -1,0 +1,158 @@
+/* ============================
+   Bloco principal: BuyTogether
+   Container e estrutura geral
+============================ */
+
+.buyTogetherContainer {
+  /* Container principal do bloco Compre Junto */
+}
+
+.currentProduct {
+  /* Coluna/área do produto atual */
+}
+
+.productList {
+  /* Coluna/área da lista de produtos sugeridos */
+}
+
+.currentProductWrapper {
+  /* Wrapper interno do produto atual (quando usado em outros componentes) */
+}
+
+.buyTogetherTitleContainer {
+  /* Container do título "Compre Junto" / mensagem principal */
+}
+
+.buyTogetherTitle {
+  /* Texto do título do Compre Junto */
+}
+
+.buyTogetherInfo {
+  /* Mensagem acima do valor total (ex: "Compre o conjunto por:") */
+}
+
+.totalValue {
+  /* Wrapper do valor total do conjunto (linha de preço) */
+}
+
+.totalProducts {
+  /* Área para exibição da quantidade total de produtos no conjunto (quando usada) */
+}
+
+.buyTogetherProductList {
+  /* Lista de produtos sugeridos (container da lista) */
+}
+
+.buyTogetherProductItem {
+  /* Item individual da lista de produtos sugeridos */
+}
+
+.totalProductsCount {
+  /* Contador/label de quantidade de produtos (quando exibido) */
+}
+
+.arrowDisabled {
+  /* Estado visual de setas desabilitadas (quando houver navegação por setas) */
+}
+
+.buyButton {
+  /* Container do botão de compra do Compre Junto */
+}
+
+.arrowNext {
+  /* Estilização da seta "próxima" (quando usada em slider/carrossel) */
+}
+
+.arrowPrev {
+  /* Estilização da seta "anterior" (quando usada em slider/carrossel) */
+}
+
+.arrow {
+  /* Estilização base para setas de navegação */
+}
+
+.customText {
+  /* Texto adicional ao lado do preço (ex: "PIX", "à vista") */
+}
+
+
+/* ============================
+   Bloco: Valor Total (Value)
+   Preço cheio x preço com desconto
+============================ */
+
+.totalValueOriginal {
+  /* Preço total "cheio" (antes do desconto visual) */
+}
+
+.totalValueDiscounted {
+  /* Preço total com desconto visual aplicado */
+}
+
+.totalValueLabel {
+  /* Label auxiliar para textos de apoio ao preço (não usado hoje em produção) */
+}
+
+
+/* ============================
+   Bloco: Lista de produtos (ProductsList)
+   Integração com Swiper
+============================ */
+
+.swiperPagination {
+  /* Container da paginação do Swiper (bullets) */
+}
+
+.swiperBullet {
+  /* Bullet padrão da paginação do Swiper */
+}
+
+.swiperBulletActive {
+  /* Bullet ativo da paginação do Swiper */
+}
+
+.swiperWrapper {
+  /* Wrapper interno do Swiper (quando for necessário customizar o carrossel) */
+}
+
+
+/* ============================
+   Bloco: Parcelamento (Installments)
+============================ */
+
+.installments {
+  /* Wrapper da linha de informações de parcelamento */
+}
+
+.installmentsNumber {
+  /* Número de parcelas (ex: "3x") */
+}
+
+.installmentValue {
+  /* Valor de cada parcela (ex: "R$ 100,00") */
+}
+
+.installmentsTotalValue {
+  /* Valor total parcelado somando juros (quando exibido) */
+}
+
+.interestRate {
+  /* Taxa de juros exibida (ex: "1,99% a.m.") */
+}
+
+.paymentSystemName {
+  /* Nome do meio de pagamento (quando for utilizado no template de mensagem) */
+}
+
+
+/* ============================
+   Bloco: Desconto (Discount)
+============================ */
+
+.discountWrapper {
+  /* Container da mensagem de desconto (ex: "com X% de desconto") */
+}
+
+.discountPercentage {
+  /* Parte numérica do percentual de desconto exibido */
+}

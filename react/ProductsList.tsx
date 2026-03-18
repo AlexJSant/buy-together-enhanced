@@ -64,7 +64,7 @@ const ProductLists: React.FC = () => {
   }, [normalizedProductList, showListMode, useManualSku])
 
   return (
-    <div className={`h-100 w-100 ph4 ${handles.productList}`}>
+    <div className={`h-100 w-100 ${handles.productList}`}>
       <div className={`${handles.buyTogetherProductList} pv4`}>
         {itemsToRender &&
           itemsToRender.length > 0 &&

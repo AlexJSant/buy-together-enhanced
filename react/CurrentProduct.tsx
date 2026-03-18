@@ -11,7 +11,7 @@ const CurrentProduct: React.FC = () => {
   const { normalizedBaseProduct } = useBuyTogether()
 
   return (
-    <div className={`h-100 ph4 ${handles.currentProduct}`}>
+    <div className={`h-100 w-100 ${handles.currentProduct}`}>
       <ExtensionPoint id="product-summary" product={normalizedBaseProduct} />
     </div>
   )

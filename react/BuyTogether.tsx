@@ -185,18 +185,29 @@ const BuyTogether: StorefrontFunctionComponent = ({
   const simplifiedTotalPrice = useMemo(() => {
     if (!cartItems) return 0
 
-    return cartItems.reduce((total: number, currentItem: CartItem) => {
+    const fullTotal = cartItems.reduce((total: number, currentItem: CartItem) => {
       const itemPrice = currentItem.sellingPrice / 100
-      
-      // Aplicar desconto em cada produto individualmente
-      if (discountPercentage > 0) {
-        const discountAmount = (itemPrice * discountPercentage) / 100
-        const discountedPrice = itemPrice - discountAmount
-        return total + discountedPrice
-      }
-
       return total + itemPrice
     }, 0)
+
+    setTotalPrice(fullTotal)
+
+    if (discountPercentage > 0) {
+      const discountedTotal = cartItems.reduce(
+        (total: number, currentItem: CartItem) => {
+          const itemPrice = currentItem.sellingPrice / 100
+          const discountAmount = (itemPrice * discountPercentage) / 100
+          const discountedPrice = itemPrice - discountAmount
+
+          return total + discountedPrice
+        },
+        0
+      )
+
+      return discountedTotal
+    }
+
+    return fullTotal
   }, [cartItems, discountPercentage])
 
   const handleSlideChange = (e: any) => {

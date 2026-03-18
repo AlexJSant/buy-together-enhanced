@@ -23,19 +23,47 @@ const CSS_HANDLES = [
   'arrowPrev',
   'arrow',
   'customText',
+  'totalValueOriginal',
+  'totalValueDiscounted',
+  'totalValueLabel',
 ]
 
 interface BuyTogetherValueProps {}
 
 const BuyTogetherValue: React.FC<BuyTogetherValueProps> = () => {
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { simplifiedTotalPrice, customText, showCustomText } = useBuyTogether()
+  const {
+    simplifiedTotalPrice,
+    totalPrice,
+    customText,
+    showCustomText,
+  } = useBuyTogether()
 
   if (!simplifiedTotalPrice) return null
 
+  const hasDiscount =
+    simplifiedTotalPrice > 0 &&
+    totalPrice > 0 &&
+    simplifiedTotalPrice < totalPrice
+
   return (
     <p className={`${handles.totalValue}`}>
-      <FormattedCurrency value={simplifiedTotalPrice} />
+      {/* Quando houver preço cheio e desconto visual, exibimos os dois valores */}
+      {hasDiscount ? (
+        <>
+          <span className={handles.totalValueOriginal}>
+            <FormattedCurrency value={totalPrice} />
+          </span>
+          <span className={handles.totalValueDiscounted}>
+            <FormattedCurrency value={simplifiedTotalPrice} />
+          </span>
+        </>
+      ) : (
+        // Fallback: quando não houver desconto configurado, mostrar apenas o total "cheio"
+        <span className={handles.totalValueOriginal}>
+          <FormattedCurrency value={simplifiedTotalPrice} />
+        </span>
+      )}
       {showCustomText && customText && (
         <span className={handles.customText}> {customText}</span>
       )}
