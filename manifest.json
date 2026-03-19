@@ -1,7 +1,7 @@
 {
   "vendor": "sunhouse",
   "name": "buy-together-enhanced",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "title": "Buy Together Enhanced",
   "description": "Displays a Buy Together bundle card with automatic Show Together cross-sell or manual SKU, discount calculation, and custom text support.",
   "defaultLocale": "pt-BR",
