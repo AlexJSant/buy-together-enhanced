@@ -3,6 +3,7 @@ import { useCssHandles } from 'vtex.css-handles'
 import { FormattedCurrency } from 'vtex.format-currency'
 
 import { useBuyTogether } from './Context'
+import './styles.css'
 
 const CSS_HANDLES = [
   'buyTogetherContainer',
@@ -13,6 +14,7 @@ const CSS_HANDLES = [
   'buyTogetherTitle',
   'buyTogetherInfo',
   'totalValue',
+  'totalValuePrices',
   'totalProducts',
   'buyTogetherProductList',
   'buyTogetherProductItem',
@@ -48,24 +50,26 @@ const BuyTogetherValue: React.FC<BuyTogetherValueProps> = () => {
 
   return (
     <p className={`${handles.totalValue}`}>
-      {/* Quando houver preço cheio e desconto visual, exibimos os dois valores */}
-      {hasDiscount ? (
-        <>
+      <span className={handles.totalValuePrices}>
+        {/* Quando houver preço cheio e desconto visual, exibimos os dois valores */}
+        {hasDiscount ? (
+          <>
+            <span className={handles.totalValueOriginal}>
+              <FormattedCurrency value={totalPrice} />
+            </span>
+            <span className={handles.totalValueDiscounted}>
+              <FormattedCurrency value={simplifiedTotalPrice} />
+            </span>
+          </>
+        ) : (
+          // Fallback: quando não houver desconto configurado, mostrar apenas o total "cheio"
           <span className={handles.totalValueOriginal}>
-            <FormattedCurrency value={totalPrice} />
-          </span>
-          <span className={handles.totalValueDiscounted}>
             <FormattedCurrency value={simplifiedTotalPrice} />
           </span>
-        </>
-      ) : (
-        // Fallback: quando não houver desconto configurado, mostrar apenas o total "cheio"
-        <span className={handles.totalValueOriginal}>
-          <FormattedCurrency value={simplifiedTotalPrice} />
-        </span>
-      )}
+        )}
+      </span>
       {showCustomText && customText && (
-        <span className={handles.customText}> {customText}</span>
+        <span className={handles.customText}>{customText}</span>
       )}
     </p>
   )

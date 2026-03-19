@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { useCssHandles } from 'vtex.css-handles'
 import { useBuyTogether } from './Context'
+import './styles.css'
 
 const CSS_HANDLES = [
   'buyTogetherContainer',

@@ -10,6 +10,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 import axios from 'axios'
 
 import './intlMessages'
+import './styles.css'
 import { BuyTogetherContext } from './Context'
 import getProducts from './graphql/getProduct.gql'
 import { mapSKUItemsToCartItems } from './utils'
@@ -45,6 +46,13 @@ interface BuyTogetherProps {
   discountPercentage?: number
   customText?: string
   showCustomText?: boolean
+  /**
+   * Quando true, mostra a modalidade "comprar com cupom" e aplica o cupom via API no clique.
+   * O valor do cupom vem de `couponCode`.
+   */
+  showBuyWithCoupon?: boolean
+  /** Código do cupom a ser aplicado quando `showBuyWithCoupon` estiver habilitado. */
+  couponCode?: string
   /** Quando true, ignora o cross-sell e usa o SKU informado em manualSkuId */
   useManualSku?: boolean
   /** SKU único a ser usado como produto sugerido quando useManualSku estiver habilitado */
@@ -70,6 +78,8 @@ const BuyTogether: StorefrontFunctionComponent = ({
   discountPercentage = 0,
   customText = 'Texto Personalizado',
   showCustomText = false,
+  showBuyWithCoupon = false,
+  couponCode = '',
   useManualSku = false,
   manualSkuId,
   message = 'Compre o conjunto por:',
@@ -77,6 +87,7 @@ const BuyTogether: StorefrontFunctionComponent = ({
 }: BuyTogetherProps) => {
   const productContext = useProduct() as any
   const { product } = productContext
+  const selectedItemId = productContext?.selectedItem?.itemId
   const [showTogetherIds, setShowTogetherIds] = useState<number[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const { handles } = useCssHandles(CSS_HANDLES)
@@ -119,10 +130,36 @@ const BuyTogether: StorefrontFunctionComponent = ({
     },
   })
 
-  const normalizedBaseProduct = useMemo(
-    () => ProductSummary.mapCatalogProductToProductSummary(product),
-    [product]
-  )
+  const normalizedBaseProduct = useMemo(() => {
+    if (!product) {
+      return {}
+    }
+
+    if (!selectedItemId || !Array.isArray(product.items)) {
+      return ProductSummary.mapCatalogProductToProductSummary(product)
+    }
+
+    const selectedItem = product.items.find(
+      (item: SKU) => String(item.itemId) === String(selectedItemId)
+    )
+
+    if (!selectedItem) {
+      return ProductSummary.mapCatalogProductToProductSummary(product)
+    }
+
+    const productWithSelectedSku = {
+      ...product,
+      sku: selectedItem,
+      items: [
+        selectedItem,
+        ...product.items.filter(
+          (item: SKU) => String(item.itemId) !== String(selectedItem.itemId)
+        ),
+      ],
+    }
+
+    return ProductSummary.mapCatalogProductToProductSummary(productWithSelectedSku)
+  }, [product, selectedItemId])
 
   const normalizedProductList = useMemo(() => {
     const skus = showAllSkus
@@ -229,6 +266,8 @@ const BuyTogether: StorefrontFunctionComponent = ({
         setTotalPrice,
         customText,
         showCustomText,
+        showBuyWithCoupon,
+        couponCode,
         useManualSku,
         // Quando há SKU manual ativo, o modo lista é ignorado pela UI do ProductsList
         showListMode,
@@ -303,6 +342,20 @@ BuyTogetherWrapper.schema = {
       default: 0, // Antes era o desconto padrao do Pix que era 10%
       minimum: 0,
       maximum: 20,
+    },
+    showBuyWithCoupon: {
+      title: 'Mostrar botão de comprar com cupom?',
+      description:
+        'Quando habilitado, o botão passa a aplicar um cupom no carrinho via Checkout API. O normal some.',
+      type: 'boolean',
+      default: false,
+    },
+    couponCode: {
+      title: 'Cupom (código)',
+      description:
+        'Código do cupom a ser aplicado quando "Mostrar botão de comprar com cupom?" estiver habilitado.',
+      type: 'string',
+      default: '',
     },
   },
 }

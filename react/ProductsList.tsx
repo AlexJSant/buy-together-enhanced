@@ -5,6 +5,7 @@ import { useCssHandles } from 'vtex.css-handles'
 import { useBuyTogether, BuyTogetherContextProps } from './Context'
 
 import './swiper.global.css'
+import './styles.css'
 
 const CSS_HANDLES = [
   'buyTogetherContainer',

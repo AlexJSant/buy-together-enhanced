@@ -3,6 +3,7 @@ import { ExtensionPoint } from 'vtex.render-runtime'
 import { useCssHandles } from 'vtex.css-handles'
 
 import { useBuyTogether } from './Context'
+import './styles.css'
 
 const CSS_HANDLES = ['currentProduct', 'currentProductWrapper']
 

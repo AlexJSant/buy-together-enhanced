@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import InstallmentRender, { CSS_HANDLES } from './components/InstallmentRender'
 import { useBuyTogether } from './Context'
+import './styles.css'
 import { getBetterInstallments } from './utils'
 import { InstallmentItem } from './typings/types'
 

@@ -13,6 +13,7 @@ The **Buy Together App** is a VTEX IO app that creates a **Buy Together** block 
 **Key features:**
 - ✅ Automatic integration with the VTEX Catalog **Show Together** cross‑sell
 - ✅ Display of the current product + list of suggested products in a horizontal layout
+- ✅ Current product in Buy Together stays synchronized with the SKU selected on the PDP
 - ✅ Automatic calculation of the bundle total value
 - ✅ Support for a **discount percentage** applied over the bundle final price
 - ✅ Option for **custom text** next to the price (e.g., "PIX", "cash", etc.), enabled by default
@@ -26,6 +27,7 @@ The **Buy Together App** is a VTEX IO app that creates a **Buy Together** block 
 The Buy Together App:
 
 1. Identifies the **current product** through `vtex.product-context`.
+   - The `buy-together-current-product` block dynamically follows the SKU selected in the PDP main selector.
 2. Fetches, via the `/api/catalog_system/pub/products/crossselling/showtogether/{productId}` API, the SKUs configured as **Show Together** in VTEX Admin.
 3. Normalizes products using `vtex.product-summary` so you can reuse the same shelf/grid visual already used in the store.
 4. Builds a **bundle card**, displaying:
@@ -128,6 +130,8 @@ The main props exposed by the `BuyTogether` schema are:
 | `customText`            | `string`  | Text displayed next to the price (e.g., `"PIX"`, `"cash"`, etc.).                                                                                   | `"PIX"`                      |
 | `discountPercentage`    | `number`  | Discount percentage to be applied over the bundle final price (0‑100). **Never leave it empty**: use `0` to apply no discount.                      | `0`                          |
 | `showListMode`          | `boolean` | When `true` **and** no manual SKU is active, shows a list of suggested products (Show Together) instead of a single item. Always limited to a safe maximum number of items. | `false`                      |
+| `showBuyWithCoupon`    | `boolean` | When `true`, the buy button applies a coupon code via Checkout API and the normal button is hidden. | `false` |
+| `couponCode`           | `string`  | Coupon code to be applied when `showBuyWithCoupon` is enabled. | `""` |
 
 > 💡 **Tip:** The discount is applied **product by product** when calculating the total value, ensuring that the percentage rule is respected even when item prices vary inside the bundle.
 
@@ -185,6 +189,12 @@ In the HTML markup, the `buy-together-message` block is rendered as a heading (`
 ## Customization
 
 To apply CSS customizations to this and other blocks, follow the [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization) recipe.
+
+You can customize the app in two complementary ways:
+- Edit the default/pre-custom styles shipped with the app in `react/styles.css` (it targets the same CSS Handles used by the components).
+- Or customize from the Store Theme using CSS Handles (recommended when you want changes without modifying the app).
+
+Both approaches can be used independently or together without issues.
 
 ### CSS Handles
 

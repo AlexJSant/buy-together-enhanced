@@ -1,3 +1,7 @@
+/* Use esse arquivo para pre-customizar o componente Compre Junto
+   sem a necessidade de criar um arquivo css para cada bloco via Store Theme 
+   De qualquer forma, e possivel customizar cada bloco via Store Theme normalmente tambem */
+
 /* ============================
    Bloco principal: BuyTogether
    Container e estrutura geral
@@ -29,10 +33,11 @@
 
 .buyTogetherInfo {
   /* Mensagem acima do valor total (ex: "Compre o conjunto por:") */
-}
-
-.totalValue {
-  /* Wrapper do valor total do conjunto (linha de preço) */
+  font-size: 1.6rem;
+  line-height: 33px;
+  margin-bottom: 0;
+  text-align: center;
+  font-weight: 500
 }
 
 .totalProducts {
@@ -57,6 +62,7 @@
 
 .buyButton {
   /* Container do botão de compra do Compre Junto */
+  /* Ideal customizar diretamente no store theme de acordo com seu padrao de botao de compra/add to cart */
 }
 
 .arrowNext {
@@ -73,6 +79,13 @@
 
 .customText {
   /* Texto adicional ao lado do preço (ex: "PIX", "à vista") */
+  display: block;
+  margin-top: 18px;
+  font-size: 1rem;
+  background: #FFDA00;
+  padding: 8px 22px;
+  border-radius: 8px 50px 50px 50px;
+  box-shadow: 4px 4px 6px #b3b3b3
 }
 
 
@@ -80,6 +93,33 @@
    Bloco: Valor Total (Value)
    Preço cheio x preço com desconto
 ============================ */
+
+.totalValue {
+  /* Wrapper do valor total do conjunto (linha de preço) */
+  font-size: 1.8rem;
+  line-height: normal;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.totalValuePrices {
+  /* Linha do preço (preço cheio + preço com desconto, quando existir) */
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: baseline;
+  width: 100%;
+}
+
+.totalValue:has(.totalValueDiscounted) .totalValueOriginal {
+  /* Preço total "cheio" (antes do desconto visual) com linha de traço */
+  text-decoration: line-through;
+  color: #979797;
+  margin-left: 12px
+}
 
 .totalValueOriginal {
   /* Preço total "cheio" (antes do desconto visual) */
@@ -97,6 +137,8 @@
 /* ============================
    Bloco: Lista de produtos (ProductsList)
    Integração com Swiper
+   A principio nao e usado, mas pode ser usado para customizar 
+   o carrossel futuramente caso ele volte a ser usado
 ============================ */
 
 .swiperPagination {
@@ -118,6 +160,7 @@
 
 /* ============================
    Bloco: Parcelamento (Installments)
+   Nao sera usado - possivelmente nunca
 ============================ */
 
 .installments {

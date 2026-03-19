@@ -10,6 +10,10 @@ export interface BuyTogetherContextProps {
   setTotalPrice: Function
   customText: string
   showCustomText: boolean
+  /** Quando true, o botão de comprar aplica um cupom informado pelo editor */
+  showBuyWithCoupon: boolean
+  /** Código do cupom a ser aplicado via Checkout API */
+  couponCode: string
   /** Quando true, ignora o cross-sell e usa o SKU informado em manualSkuId */
   useManualSku: boolean
   /** Quando true (e sem SKU manual ativo), exibe múltiplos itens de cross-sell em vez de apenas um */
@@ -27,6 +31,8 @@ export const BuyTogetherContextDefault = {
   setTotalPrice: () => {},
   customText: 'PIX',
   showCustomText: false,
+  showBuyWithCoupon: false,
+  couponCode: '',
   useManualSku: false,
   showListMode: false,
   message: undefined,

@@ -3,6 +3,7 @@ import { useCssHandles } from 'vtex.css-handles'
 import { FormattedCurrency } from 'vtex.format-currency'
 import { IOMessageWithMarkers } from 'vtex.native-types'
 import { useBuyTogether } from './Context'
+import './styles.css'
 
 const CSS_HANDLES = ['discountWrapper', 'discountPercentage']
 
